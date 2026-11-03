@@ -13,16 +13,30 @@ class AppConfig {
 
   // Network & Web Endpoints
   static const String initialUrl = 'https://anisonglist.com/';
+
+  /// Internal hostnames that belong directly to AniSongList.
   static const List<String> internalHosts = <String>[
     'anisonglist.com',
     'www.anisonglist.com',
+    'db.anisonglist.com',
   ];
+
+  /// Auxiliary trusted hostnames required for infrastructure (e.g., Cloudflare Turnstile).
+  static const List<String> auxiliaryAllowedHosts = <String>[
+    'challenges.cloudflare.com',
+    'cloudflare.com',
+    'turnstile',
+  ];
+
+  /// Modern Mobile Chrome User-Agent to ensure Cloudflare Turnstile and Netlify
+  /// render cleanly without being flagged by Android WebView bot-detection rules.
+  static const String customUserAgent =
+      'Mozilla/5.0 (Linux; Android 14; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.127 Mobile Safari/537.36';
 
   // WebView Feature Flags
   static const bool enableJavaScript = true;
   static const bool enableDomStorage = true;
   static const bool mediaPlaybackRequiresUserGesture = false;
-  static const bool enablePullToRefresh = true;
 
   // Navigation & Timeouts
   static const Duration backExitThreshold = Duration(seconds: 2);
@@ -47,4 +61,3 @@ class AppConfig {
   static const Color errorColor = Color(0xFFFF6B6B);
   static const Color progressIndicatorColor = Color(0xFF00CEC9);
 }
-

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
@@ -43,6 +44,7 @@ class WebViewManager {
             : JavaScriptMode.disabled,
       )
       ..setBackgroundColor(AppConfig.backgroundColor)
+      ..setUserAgent(AppConfig.customUserAgent)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
@@ -55,8 +57,9 @@ class WebViewManager {
             callbacks.onPageFinished(url);
           },
           onWebResourceError: (WebResourceError error) {
-            // Filter out minor sub-resource errors, surface primary domain failures
-            if (error.isForMainFrame ?? true) {
+            // Only report fatal errors on the primary frame to prevent minor
+            // asset/analytics failures from hiding the webview.
+            if (error.isForMainFrame == true) {
               callbacks.onErrorOccurred(error.description);
             }
           },
@@ -74,7 +77,7 @@ class WebViewManager {
         ),
       );
 
-    // Apply platform-specific media playback optimizations
+    // Apply platform-specific optimizations for Android
     if (webController.platform is AndroidWebViewController) {
       final AndroidWebViewController androidController =
           webController.platform as AndroidWebViewController;
@@ -82,6 +85,13 @@ class WebViewManager {
       androidController.setMediaPlaybackRequiresUserGesture(
         AppConfig.mediaPlaybackRequiresUserGesture,
       );
+
+      // Log console messages during debug sessions
+      if (kDebugMode) {
+        androidController.setOnConsoleMessage((JavaScriptConsoleMessage msg) {
+          debugPrint('[WebView JS Console] ${msg.level.name}: ${msg.message}');
+        });
+      }
     }
 
     controller = webController;
@@ -101,4 +111,3 @@ class WebViewManager {
   /// Reloads the current page.
   Future<void> reload() => controller.reload();
 }
-

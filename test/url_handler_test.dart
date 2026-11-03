@@ -13,7 +13,18 @@ void main() {
         isTrue,
       );
       expect(
-        UrlHandler.isInternalUri(Uri.parse('https://sub.anisonglist.com/song/123')),
+        UrlHandler.isInternalUri(Uri.parse('https://db.anisonglist.com/storage')),
+        isTrue,
+      );
+    });
+
+    test('Correctly identifies auxiliary and initialization URIs', () {
+      expect(
+        UrlHandler.isInternalUri(Uri.parse('about:blank')),
+        isTrue,
+      );
+      expect(
+        UrlHandler.isInternalUri(Uri.parse('https://challenges.cloudflare.com/turnstile/v0/api.js')),
         isTrue,
       );
     });
@@ -38,4 +49,3 @@ void main() {
     });
   });
 }
-

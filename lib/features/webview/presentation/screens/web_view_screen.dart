@@ -52,17 +52,10 @@ class _WebViewScreenState extends State<WebViewScreen>
     });
   }
 
-  Future<void> _initiateInitialLoad() async {
-    final bool isOnline = await _networkChecker.hasConnection();
-    if (!isOnline) {
-      setState(() {
-        _hasError = true;
-        _errorMessage = AppConfig.offlineSubtitle;
-      });
-      return;
-    }
-
-    await _webViewManager.loadInitialPage();
+  void _initiateInitialLoad() {
+    // Load the web page immediately on startup without waiting for async
+    // network probes to prevent cold-start race conditions.
+    _webViewManager.loadInitialPage();
   }
 
   @override
@@ -123,10 +116,6 @@ class _WebViewScreenState extends State<WebViewScreen>
     }
   }
 
-  Future<void> _handleRefresh() async {
-    await _webViewManager.reload();
-  }
-
   void _handleBackNavigation(bool didPop) async {
     if (didPop) return;
 
@@ -174,26 +163,29 @@ class _WebViewScreenState extends State<WebViewScreen>
         backgroundColor: AppConfig.backgroundColor,
         body: SafeArea(
           child: Stack(
+            fit: StackFit.expand,
             children: <Widget>[
-              if (!_hasError)
-                AppConfig.enablePullToRefresh
-                    ? RefreshIndicator(
-                        color: AppConfig.primaryColor,
-                        backgroundColor: AppConfig.surfaceColor,
-                        onRefresh: _handleRefresh,
-                        child: WebViewWidget(
-                          controller: _webViewManager.controller,
-                        ),
-                      )
-                    : WebViewWidget(
-                        controller: _webViewManager.controller,
-                      ),
-              if (_hasError)
-                ErrorView(
-                  onRetry: _handleRetry,
-                  subtitle: _errorMessage,
+              // Ensure WebView expands to fill the entire screen viewport
+              Positioned.fill(
+                child: WebViewWidget(
+                  controller: _webViewManager.controller,
                 ),
-              LoadingIndicator(progress: _loadingProgress),
+              ),
+              // Fullscreen error overlay shown on fatal network failure
+              if (_hasError)
+                Positioned.fill(
+                  child: ErrorView(
+                    onRetry: _handleRetry,
+                    subtitle: _errorMessage,
+                  ),
+                ),
+              // Pinned progress bar at top of viewport
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: LoadingIndicator(progress: _loadingProgress),
+              ),
             ],
           ),
         ),
@@ -201,4 +193,3 @@ class _WebViewScreenState extends State<WebViewScreen>
     );
   }
 }
-
