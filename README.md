@@ -1,9 +1,15 @@
 # AniSongList WebView
 
-A dedicated, high-performance WebView application for [AniSongList](https://anisonglist.com/), built with Flutter. It delivers an optimized mobile and cross-platform experience for exploring, searching, and rating anime opening and ending themes.
+A dedicated, high-performance WebView application for [AniSongList](https://anisonglist.com/), built with Flutter. It delivers an optimized mobile experience for exploring, searching, listening to, and rating anime opening and ending themes.
+
+## Public Release v1.0.0
+
+- **APK Release Artifact**: `AniSongList-v1.0.0.apk`
+- **Release Documentation**: See [`RELEASE.md`](RELEASE.md) for full bilingual release notes.
 
 ## Features
 
+- **Official AniSongList Branding**: Integrated high-resolution adaptive app icons across all Android display densities.
 - **Media & Audio/Video Playback**: Hardware acceleration enabled with inline media playback and unrestricted JavaScript execution for seamless media streaming.
 - **Centralized Configuration**: All endpoints, feature flags, constants, colors, and string resources are consolidated in [`AppConfig`](lib/core/config/app_config.dart) to eliminate hardcoding.
 - **Strict DRY Architecture**: Reusable utilities and controllers ensure zero duplicate functions across the codebase.
@@ -14,7 +20,6 @@ A dedicated, high-performance WebView application for [AniSongList](https://anis
 - **Network Resilience & Error Handling**:
   - Real-time connectivity monitoring via `connectivity_plus`.
   - Elegant offline error view with automated and manual retry triggers.
-  - Pull-to-refresh integration.
   - Sleek top progress indicator reflecting page loading status.
 
 ## Project Structure
@@ -22,6 +27,9 @@ A dedicated, high-performance WebView application for [AniSongList](https://anis
 ```
 anisonglist-webview/
 ├── android/                         # Android platform configuration & permissions
+├── assets/
+│   └── branding/
+│       └── logo.png                 # Official AniSongList master logo
 ├── ios/                             # iOS platform configuration & ATS rules
 ├── lib/
 │   ├── core/
@@ -43,6 +51,7 @@ anisonglist-webview/
 │   │               └── loading_indicator.dart# Linear loading progress indicator
 │   └── main.dart                    # Application entry point
 ├── test/                            # Unit and widget test suite
+├── RELEASE.md                       # Public release notes & download guide
 └── pubspec.yaml                     # Project dependencies
 ```
 
@@ -50,9 +59,9 @@ anisonglist-webview/
 
 ### Prerequisites
 - [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.16.0 or higher)
-- Android SDK (API 21+) / Xcode (for iOS)
+- Android SDK (API 21+)
 
-### Installation
+### Installation & Run
 1. Clone the repository:
    ```bash
    git clone https://github.com/tomi-prastiyo/anisonglist-webview.git
@@ -64,10 +73,18 @@ anisonglist-webview/
    flutter pub get
    ```
 
-3. Run the application:
+3. Run in debug mode:
    ```bash
    flutter run
    ```
+
+### Building Public Release APK
+Build the release artifact:
+```bash
+flutter build apk --release
+```
+The output file will be generated at:
+`build/app/outputs/flutter-apk/AniSongList-v1.0.0.apk` (or `app-release.apk`).
 
 ### Running Tests and Linting
 - **Static Analysis**:
