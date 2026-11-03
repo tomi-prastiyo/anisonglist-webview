@@ -1,6 +1,8 @@
 # AniSongList v1.0.0 — Public Release
 
 **Release Artifact**: `AniSongList-v1.0.0.apk`  
+**File Size**: 41.9 MB (43,917,313 bytes)  
+**SHA-256**: `F4A458404D22B45536A5F121040B9B5D0281327D4269C47B62FB780501E5E7A4`  
 **Version**: `1.0.0+1`  
 **Package**: `com.anisonglist.anisonglist_webview`  
 **Official Website**: [https://anisonglist.com/](https://anisonglist.com/)
@@ -22,7 +24,7 @@ AniSongList is a dedicated, high-performance WebView application for exploring, 
 - **Lightweight & Privacy-Focused**: Direct connection to official AniSongList servers without analytics overhead or bloat.
 
 ### 📥 Download & Installation
-1. Download **`AniSongList-v1.0.0.apk`**.
+1. Download **`AniSongList-v1.0.0.apk`** from the `release/` folder or releases page.
 2. Open the downloaded file on your Android device (ensure *Install from unknown sources* is allowed for your browser/file manager).
 3. Tap **Install** and enjoy AniSongList!
 
@@ -42,7 +44,6 @@ AniSongList adalah aplikasi khusus berbasis WebView berkinerja tinggi untuk mene
 - **Ringan & Cepat**: Akses langsung ke server resmi tanpa aplikasi pihak ketiga yang memberatkan.
 
 ### 📥 Cara Instalasi:
-1. Unduh file **`AniSongList-v1.0.0.apk`**.
+1. Unduh file **`AniSongList-v1.0.0.apk`** dari folder `release/` atau rilis GitHub.
 2. Buka file APK di perangkat Android Anda (izinkan instalasi dari sumber tidak dikenal jika diminta).
 3. Klik **Pasang (Install)** dan buka aplikasi.
-
